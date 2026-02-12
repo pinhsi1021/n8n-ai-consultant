@@ -28,87 +28,58 @@
 - **Frontend**: HTML5, CSS3 (Modern UI), Vanilla JavaScript
 - **Integration**: n8n Community API
 
-## 📋 安裝指南 (Installation Guide)
+## � 極速啟動 (One-Line Start)
 
-### 前置需求 (Prerequisites)
-- **Python 3.8 或更高版本**：請至 [Python 官網](https://www.python.org/downloads/) 下載並安裝。
-- **Git**：用於複製專案程式碼。
+**複製以下指令，貼上並按下 Enter，即可自動安裝並啟動系統：**
 
-### 🚀 快速啟動 (Quick Start)
-如果您不想手動逐一安裝，可以使用我們準備的自動化腳本：
+```bash
+git clone https://github.com/pinhsi1021/n8n-ai-consultant.git && cd n8n-ai-consultant && chmod +x run.sh && ./run.sh
+```
 
-**macOS / Linux:**
-1. 下載專案後，在終端機執行：
-   ```bash
-   chmod +x run.sh
-   ./run.sh
-   ```
-   腳本會自動檢查環境、建立虛擬環境、安裝依賴並開啟瀏覽器。
+*(系統會自動檢查環境、安裝必要套件並開啟瀏覽器)*
 
 ---
 
-### 分步安裝指南 (Manual Installation)
+<details>
+<summary><strong>👇 點擊展開：手動安裝說明 (Manual Installation)</strong></summary>
 
-### 步驟 1：下載專案
-開啟終端機 (Terminal) 或命令提示字元 (Command Prompt)，執行以下指令：
+### 前置需求
+- **Python 3.8+** (Mac 通常內建，Windows 需安裝)
+- **Git**
 
-```bash
-git clone https://github.com/pinhsi1021/n8n-ai-consultant.git
-cd n8n-ai-consultant
-```
-
-### 步驟 2：建立虛擬環境 (建議)
-為避免污染全域 Python 環境，建議建立虛擬環境：
-
-**macOS / Linux:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-**Windows:**
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-### 步驟 3：安裝依賴套件
-```bash
-pip install -r requirements.txt
-```
-*(主要依賴僅需 `jieba`，輕量快速)*
-
-## 🚀 啟動系統 (Running the Application)
-
-1. 確認虛擬環境已啟用 (若有建立)。
-2. 執行啟動指令：
+### 步驟
+1. 下載專案：
+   ```bash
+   git clone https://github.com/pinhsi1021/n8n-ai-consultant.git
+   cd n8n-ai-consultant
+   ```
+2. 建立環境與安裝：
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. 啟動：
    ```bash
    python web_server.py
    ```
-3. 您將看到以下訊息，代表伺服器已成功啟動：
-   ```
-     🤖 n8n AI 導入顧問系統 — Web Server
-     🌐 http://localhost:8080
-   ```
-4. 打開瀏覽器，前往 **[http://localhost:8080](http://localhost:8080)** 即可開始使用。
+</details>
 
 ## 📖 使用說明 (Usage)
 
 1. **選擇背景**：在左側設定您的產業類別（如：製造業）與部門（如：生產管理）。
-2. **輸入痛點**：在文字框中描述您遇到的問題（支援多行輸入，每行一個痛點）。
-   - *範例：「產線設備經常無預警停機，維修人員無法即時收到通知。」*
-3. **開始分析**：點擊「開始分析」按鈕。
-4. **查看報告**：
-   - **本地 AI 分析**：查看系統建議的節點流向、困難度評估與成本預估。
-   - **顧問模式**：開啟右上角的「🔒 顧問模式」開關，解鎖下方「n8n 社群參考」分頁，查看更多相似的實戰模版。
+2. **輸入痛點**：在文字框中描述您遇到的問題。
+3. **開分析**：點擊按鈕，查看本地 AI 建議與成本預估。
+4. **顧問模式**：開啟右上角開關，獲取 n8n 社群模版推薦。
 
-## ⚠️ 注意事項
-- 本系統為 **顧問諮詢工具**，用於規劃與建議，並非 n8n 自動化軟體本身。
-- 若需執行建議的工作流，請自行安裝 [n8n](https://n8n.io/) 或使用 n8n Cloud 服務。
-- 本地伺服器預設使用 Port `8080`，若被佔用請修改 `web_server.py` 中的 `PORT` 變數。
+## ⚠️ 常見問題
+- **一定要安裝 Python 嗎？**  
+  是的，本系統後端核心使用 Python 運行。Mac/Linux 通常已內建，Windows 用戶需先安裝一次。
+- **需要安裝 Node.js 嗎？**  
+  **不需要**。本顧問工具完全獨立運行。
 
 ## 📞 聯絡與支援
-如有任何問題或功能建議，歡迎提交 Issue 或透過 GitHub 聯繫開發者。
+如有任何問題，歡迎提交 Issue 或透過 GitHub 聯繫開發者。
 
 ---
 **License**: MIT
