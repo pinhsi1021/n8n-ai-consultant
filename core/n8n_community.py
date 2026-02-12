@@ -638,9 +638,7 @@ def enrich_workflow(detail, wf_id=None):
     return {
         "id": resolved_id,
         "name": name_zh,
-        "name_en": name,
         "description": desc_zh,
-        "description_en": _clean_description(description),
         "url": url,
         "nodes": nodes_zh,
         "node_count": node_count,
@@ -648,7 +646,6 @@ def enrich_workflow(detail, wf_id=None):
         "difficulty_display": "★" * difficulty + "☆" * (5 - difficulty),
         "difficulty_reasons": reasons,
         "steps": steps_zh,
-        "categories": categories,
     }
 
 
@@ -861,17 +858,7 @@ def _clean_description(desc):
     return clean
 
 
-def _extract_categories(detail):
-    """提取分類標籤"""
-    categories = []
-    cats = detail.get("categories", [])
-    if isinstance(cats, list):
-        for c in cats:
-            if isinstance(c, dict):
-                categories.append(c.get("name", ""))
-            elif isinstance(c, str):
-                categories.append(c)
-    return [c for c in categories if c][:5]
+
 
 
 # ══════════════════════════════════════════════════════════
@@ -892,7 +879,6 @@ def search_and_enrich(zh_keywords, industry="", max_results=5):
 
     def _collect(query, label, rows=8):
         """搜尋並收集結果，去重"""
-        print(f"[n8n_community] {label}: {query}")
         results = search_workflows(query, rows=rows)
         for wf in results:
             wf_id = wf.get("id")

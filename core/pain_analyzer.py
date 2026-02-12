@@ -121,7 +121,17 @@ def analyze_pain_point(pain_text, industry="", department=""):
     text = f"{pain_text} {industry} {department}".lower()
 
     # ── 1. jieba 關鍵字萃取 ──
-    keywords = jieba.analyse.extract_tags(pain_text, topK=10, withWeight=False)
+    tags = jieba.analyse.extract_tags(pain_text, topK=20, withWeight=False)
+
+    # 過濾通用停用詞
+    STOP_WORDS = {
+        "系統", "管理", "進行", "分析", "需求", "資料", "數據",
+        "流程", "作業", "改善", "優化", "提升", "問題", "公司", "部門",
+        "協助", "導入", "操作", "人員", "時間", "處理", "工作", "方式",
+        "效率", "應用", "工具", "服務", "內容", "計畫", "項目", "目標", "能力",
+        "可以", "能夠", "需要", "想要", "使用", "透過", "對於", "關於"
+    }
+    keywords = [w for w in tags if w not in STOP_WORDS and len(w) > 1][:10]
 
     # ── 2. 多維度偵測 ──
     data_sources = _detect(text, DATA_SOURCE_MAP)
