@@ -1,14 +1,14 @@
 """
-roadmap_generator.py — n8n 導入路徑圖產生器
+roadmap_generator.py — n8n 導入路徑圖產生器（動態版）
 
-根據匹配到的 n8n 解決方案，產出包含：
-  1. 最佳 n8n 解決方案說明
-  2. n8n 工作流設計（節點圖）
-  3. 困難度評分 + 評分理由
-  4. 從第一步到完成的實施步驟指南
+使用 pain_analyzer + dynamic_composer 動態產出：
+  1. 客製化 n8n 工作流設計
+  2. 動態困難度評分 + 客製理由
+  3. 根據痛點量身打造的實施步驟
 """
 
-import json
+from core.pain_analyzer import analyze_pain_point
+from core.dynamic_composer import compose_workflow, compose_difficulty, compose_steps
 
 
 def _stars(n):
@@ -20,56 +20,64 @@ def generate_roadmap(matched_solutions, industry_name, department_name=None, use
     """
     產生 n8n 導入路徑圖。
 
-    Parameters
-    ----------
-    matched_solutions : list[dict]
-        matcher.match_solutions() 的回傳結果
-    industry_name : str
-        營業項目/產業名稱
-    department_name : str, optional
-        部門名稱
-    user_query : str
-        用戶的原始痛點描述
+    流程：
+    1. pain_analyzer 分析痛點文字
+    2. dynamic_composer 動態組裝工作流
+    3. dynamic_composer 動態計算困難度
+    4. dynamic_composer 動態產出實施步驟
+    5. TF-IDF 匹配結果作為替代方案
 
     Returns
     -------
     dict
-        包含 solution, workflow, difficulty, difficulty_reasons, steps
     """
-    if not matched_solutions:
-        return _empty_roadmap(industry_name, department_name, user_query)
+    # ── 1. 分析痛點 ──
+    analysis = analyze_pain_point(user_query, industry_name, department_name or "")
 
-    # 取最佳匹配方案
-    best = matched_solutions[0]
-    sol = best["solution"]
+    # ── 2. 動態組裝工作流 ──
+    workflow = compose_workflow(analysis, industry_name, user_query)
 
+    # ── 3. 動態計算困難度 ──
+    difficulty, difficulty_reasons = compose_difficulty(analysis, len(workflow["nodes"]))
+
+    # ── 4. 動態產出步驟 ──
+    steps = compose_steps(analysis, workflow["nodes"], difficulty)
+
+    # ── 5. 組裝結果 ──
     roadmap = {
         "industry": industry_name,
         "department": department_name or "全部門",
         "user_query": user_query,
-        "match_score": best["similarity"],
+        "match_score": matched_solutions[0]["similarity"] if matched_solutions else 0,
 
-        # ── 解決方案 ──
-        "solution_name": sol["name"],
-        "solution_id": sol["id"],
+        # 動態產出的方案
+        "solution_name": workflow["name"],
 
-        # ── n8n 工作流 ──
-        "workflow": sol["workflow"],
+        # 痛點分析摘要 ★ 新增
+        "pain_summary": analysis["pain_summary"],
+        "detected_keywords": analysis["keywords"][:6],
+        "detected_sources": analysis["data_sources"],
+        "detected_actions": analysis["actions"],
+        "detected_outputs": analysis["outputs"],
+        "detected_complexity": analysis["complexity"],
 
-        # ── 困難度 ──
-        "difficulty": sol["difficulty"],
-        "difficulty_display": _stars(sol["difficulty"]),
-        "difficulty_reasons": sol["difficulty_reasons"],
+        # 動態工作流
+        "workflow": workflow,
 
-        # ── 實施步驟 ──
-        "steps": sol["steps"],
+        # 動態困難度
+        "difficulty": difficulty,
+        "difficulty_display": _stars(difficulty),
+        "difficulty_reasons": difficulty_reasons,
 
-        # ── 其他候選方案（如有）──
+        # 動態步驟
+        "steps": steps,
+
+        # TF-IDF 匹配作為替代方案
         "alternatives": [],
     }
 
-    # 加入替代方案
-    for alt in matched_solutions[1:]:
+    # 替代方案（來自靜態庫的 TF-IDF 匹配結果）
+    for alt in matched_solutions[:3]:
         alt_sol = alt["solution"]
         roadmap["alternatives"].append({
             "name": alt_sol["name"],
@@ -78,72 +86,4 @@ def generate_roadmap(matched_solutions, industry_name, department_name=None, use
             "difficulty_display": _stars(alt_sol["difficulty"]),
         })
 
-    # ── 產出格式化報告 ──
-    roadmap["full_report"] = _format_report(roadmap)
-
     return roadmap
-
-
-def _empty_roadmap(industry, department, query):
-    """無匹配結果時的空路徑圖"""
-    return {
-        "industry": industry,
-        "department": department or "全部門",
-        "user_query": query,
-        "match_score": 0,
-        "solution_name": "未找到匹配的解決方案",
-        "solution_id": "none",
-        "workflow": {"name": "N/A", "description": "請嘗試用更具體的痛點描述重新分析", "nodes": []},
-        "difficulty": 0,
-        "difficulty_display": "☆☆☆☆☆",
-        "difficulty_reasons": ["無法評估——請補充更多痛點細節"],
-        "steps": [{"step": 1, "title": "重新描述痛點", "desc": "請用更具體的業務場景重新描述您的痛點", "duration": "N/A"}],
-        "alternatives": [],
-        "full_report": "未找到匹配的解決方案，請嘗試更具體的描述。",
-    }
-
-
-def _format_report(roadmap):
-    """格式化為可印出的文字報告"""
-    lines = []
-    lines.append("")
-    lines.append("=" * 70)
-    lines.append("         🤖 n8n AI 導入路徑圖 — Implementation Roadmap")
-    lines.append("=" * 70)
-    lines.append("")
-    lines.append(f"  📌 營業項目：{roadmap['industry']}")
-    lines.append(f"  📌 部門：{roadmap['department']}")
-    lines.append(f"  📌 痛點描述：{roadmap['user_query']}")
-    lines.append("")
-
-    lines.append("-" * 70)
-    lines.append(f"  🎯 推薦解決方案：{roadmap['solution_name']}")
-    lines.append("-" * 70)
-    wf = roadmap["workflow"]
-    lines.append(f"  工作流名稱：{wf['name']}")
-    lines.append(f"  說明：{wf['description']}")
-    lines.append("")
-    lines.append("  n8n 節點設計：")
-    for i, node in enumerate(wf.get("nodes", []), 1):
-        lines.append(f"    [{i}] {node['name']} ({node['type']})")
-        lines.append(f"        {node['desc']}")
-
-    lines.append("")
-    lines.append("-" * 70)
-    lines.append(f"  📊 困難度：{roadmap['difficulty_display']}  ({roadmap['difficulty']}/5)")
-    lines.append("-" * 70)
-    lines.append("  評分理由：")
-    for i, reason in enumerate(roadmap["difficulty_reasons"], 1):
-        lines.append(f"    {i}. {reason}")
-
-    lines.append("")
-    lines.append("-" * 70)
-    lines.append("  📋 實施步驟")
-    lines.append("-" * 70)
-    for s in roadmap["steps"]:
-        lines.append(f"    Step {s['step']}：{s['title']}（{s.get('duration', '')}）")
-        lines.append(f"        {s['desc']}")
-    lines.append("")
-    lines.append("=" * 70)
-
-    return "\n".join(lines)

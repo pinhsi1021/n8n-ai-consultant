@@ -80,13 +80,19 @@ class ConsultantHandler(SimpleHTTPRequestHandler):
                 user_query=pain_point,
             )
 
-            # 回傳 JSON（排除 full_report 純文字）
+            # 回傳 JSON
             result = {
                 "industry": roadmap["industry"],
                 "department": roadmap["department"],
                 "user_query": roadmap["user_query"],
                 "match_score": roadmap["match_score"],
                 "solution_name": roadmap["solution_name"],
+                "pain_summary": roadmap.get("pain_summary", ""),
+                "detected_keywords": roadmap.get("detected_keywords", []),
+                "detected_sources": roadmap.get("detected_sources", []),
+                "detected_actions": roadmap.get("detected_actions", []),
+                "detected_outputs": roadmap.get("detected_outputs", []),
+                "detected_complexity": roadmap.get("detected_complexity", []),
                 "workflow": roadmap["workflow"],
                 "difficulty": roadmap["difficulty"],
                 "difficulty_display": roadmap["difficulty_display"],

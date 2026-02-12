@@ -676,6 +676,64 @@
             margin: 12px 0 20px;
         }
 
+        /* ── Pain Analysis ── */
+        .analysis-summary {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--surface-warm);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--gold);
+        }
+
+        .detected-dims {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .dim-group {
+            margin-bottom: 16px;
+        }
+
+        .dim-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .dim-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            margin-right: 6px;
+            margin-bottom: 4px;
+        }
+
+        .dim-tag.gold {
+            border-color: var(--gold-border);
+            color: var(--gold);
+            background: var(--gold-muted);
+        }
+
+        .dim-tag.warn {
+            border-color: #e8c07a;
+            color: #b8855a;
+            background: rgba(232, 192, 122, 0.1);
+        }
+
         /* ── Animations ── */
         @keyframes fadeIn {
             from {
@@ -784,6 +842,11 @@
         <div id="results">
             <div class="result-header" id="resultHeader"></div>
 
+            <div class="card" id="analysisCard">
+                <div class="card-title">痛點分析</div>
+                <div id="analysisContent"></div>
+            </div>
+
             <div class="card" id="workflowCard">
                 <div class="card-title">n8n 工作流設計</div>
                 <div id="workflowContent"></div>
@@ -888,7 +951,7 @@
             const btn = document.getElementById('analyzeBtn');
             btn.classList.add('loading');
             btn.disabled = true;
-            btn.querySelector('.btn-text').textContent = '分析中...';
+            btn.querySelector('.btn-text').textContent = '深度分析中...';
 
             try {
                 const res = await fetch('/api/analyze', {
@@ -914,10 +977,10 @@
             // ── 1. Solution Header ──
             document.getElementById('resultHeader').innerHTML = `
                 <div style="flex:1">
-                    <div class="solution-badge">推薦方案</div>
+                    <div class="solution-badge">動態分析結果</div>
                     <div class="solution-title">${data.solution_name}</div>
                     <div class="solution-desc">${data.workflow.description}</div>
-                    <div class="solution-meta">${data.industry} / ${data.department}　·　匹配度 ${(data.match_score * 100).toFixed(1)}%</div>
+                    <div class="solution-meta">${data.industry} / ${data.department}</div>
                 </div>
                 <div class="difficulty-block">
                     <div class="difficulty-number">${data.difficulty}</div>
@@ -925,6 +988,36 @@
                     <div class="difficulty-label-sm">DIFFICULTY</div>
                 </div>
             `;
+
+            // ── 1.5 Pain Analysis ──
+            const analysisContent = document.getElementById('analysisContent');
+            let analysisHtml = '';
+
+            if (data.pain_summary) {
+                analysisHtml += `<div class="analysis-summary">${data.pain_summary}</div>`;
+            }
+
+            const dims = [
+                { label: '核心關鍵字', items: data.detected_keywords || [], cls: 'gold' },
+                { label: '資料來源', items: data.detected_sources || [], cls: '' },
+                { label: '處理動作', items: data.detected_actions || [], cls: '' },
+                { label: '輸出方式', items: data.detected_outputs || [], cls: '' },
+                { label: '複雜度因素', items: data.detected_complexity || [], cls: 'warn' },
+            ];
+
+            dims.forEach(d => {
+                if (d.items.length > 0) {
+                    analysisHtml += `<div class="dim-group">`;
+                    analysisHtml += `<span class="dim-label">${d.label}</span>`;
+                    analysisHtml += `<div class="detected-dims">`;
+                    d.items.forEach(item => {
+                        analysisHtml += `<span class="dim-tag ${d.cls}">${item}</span>`;
+                    });
+                    analysisHtml += `</div></div>`;
+                }
+            });
+
+            analysisContent.innerHTML = analysisHtml;
 
             // ── 2. n8n Workflow ──
             const wfContent = document.getElementById('workflowContent');
