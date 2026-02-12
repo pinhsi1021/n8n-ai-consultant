@@ -446,7 +446,7 @@ def compose_steps(analysis, workflow_nodes, difficulty):
         "step": step_num,
         "title": "需求確認與資料盤點",
         "desc": f"盤點「{target}」相關數據的來源與格式，確認可用的 {'、'.join(sources[:2]) if sources else '資料接口'}，並定義預期的自動化目標。",
-        "duration": "1~2 天",
+        "duration": "1 週",
     })
     step_num += 1
 
@@ -457,7 +457,7 @@ def compose_steps(analysis, workflow_nodes, difficulty):
             "step": step_num,
             "title": f"串接資料來源（{src_text}）",
             "desc": f"在 n8n 中設定 {src_text} 的連線，測試資料讀取是否正確，確認欄位對應。",
-            "duration": "2~3 天" if len(sources) >= 2 else "1~2 天",
+            "duration": "1~2 週",
         })
         step_num += 1
 
@@ -468,7 +468,7 @@ def compose_steps(analysis, workflow_nodes, difficulty):
             "step": step_num,
             "title": f"建構核心邏輯（{act_text}）",
             "desc": f"在 n8n 中建立「{target}」的{act_text}處理節點，撰寫必要的 Prompt 或計算邏輯，並以小量測試資料驗證。",
-            "duration": "3~5 天" if any(a in actions for a in ["預測分析", "影像辨識", "風險評估"]) else "2~3 天",
+            "duration": "2~3 週" if any(a in actions for a in ["預測分析", "影像辨識", "風險評估"]) else "1~2 週",
         })
         step_num += 1
 
@@ -479,7 +479,7 @@ def compose_steps(analysis, workflow_nodes, difficulty):
             "step": step_num,
             "title": "設定條件分流與閾值",
             "desc": f"設定 IF/Switch 節點的判斷閾值（例如：風險高/中/低），確保「{target}」分流邏輯準確。",
-            "duration": "1~2 天",
+            "duration": "1 週",
         })
         step_num += 1
 
@@ -491,7 +491,7 @@ def compose_steps(analysis, workflow_nodes, difficulty):
             "step": step_num,
             "title": f"設定輸出通道（{out_text}）",
             "desc": f"設定{out_text}節點，確保「{target}」處理結果能正確送達通知對象。",
-            "duration": "1~2 天",
+            "duration": "1 週",
         })
         step_num += 1
 
@@ -500,7 +500,7 @@ def compose_steps(analysis, workflow_nodes, difficulty):
         "step": step_num,
         "title": "端到端測試與微調",
         "desc": f"用真實資料執行完整工作流，驗證從資料匯入到結果輸出的全流程，微調{target}相關參數。",
-        "duration": "2~3 天",
+        "duration": "1~2 週",
     })
     step_num += 1
 
@@ -509,10 +509,36 @@ def compose_steps(analysis, workflow_nodes, difficulty):
         "step": step_num,
         "title": "正式上線與監控",
         "desc": f"啟用排程或觸發條件，監控前 1~2 週的執行紀錄，處理邊界情況或例外。",
-        "duration": "持續",
+        "duration": "持續維護",
     })
 
     return steps
+
+
+def compose_cost(node_count, difficulty_score):
+    """
+    估算導入成本（新台幣）。
+    
+    邏輯：
+    - 基礎設置費：30,000
+    - 節點費：每個節點 5,000 ~ 8,000
+    - 困難度加乘：1.0 ~ 2.0
+    """
+    base_price = 30000
+    node_price = 6000
+    
+    # 困難度係數
+    multiplier = 1.0 + (difficulty_score - 1) * 0.25  # 1->1.0, 3->1.5, 5->2.0
+    
+    raw_estimate = (base_price + (node_count * node_price)) * multiplier
+    
+    # 取整數 (萬)
+    lower = int(raw_estimate * 0.9 / 10000) * 10000
+    upper = int(raw_estimate * 1.2 / 10000) * 10000
+    
+    # 格式化
+    return f"{lower//10000}萬 ~ {upper//10000}萬 TWD"
+
 
 
 # ══════════════════════════════════════════════════════════

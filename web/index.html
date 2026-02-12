@@ -676,6 +676,250 @@
             margin: 12px 0 20px;
         }
 
+        /* ── Tabs ── */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.25s;
+            letter-spacing: 0.03em;
+            font-family: inherit;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        .tab-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 1px 7px;
+            border-radius: 10px;
+            background: var(--gold-muted);
+            color: var(--gold);
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* ── Community Card ── */
+        .comm-card {
+            padding: 24px;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comm-card:hover {
+            border-color: var(--gold-border);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .comm-card.expanded {
+            border-color: var(--gold);
+        }
+
+        .comm-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .comm-card-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .comm-card-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .comm-card-meta {
+            display: flex;
+            gap: 14px;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            letter-spacing: 0.03em;
+        }
+
+        .comm-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .comm-difficulty {
+            text-align: center;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .comm-difficulty-num {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            line-height: 1;
+        }
+
+        .comm-difficulty-stars {
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            margin-top: 3px;
+        }
+
+        .comm-expand-hint {
+            font-size: 0.68rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* ── Community Detail (expanded) ── */
+        .comm-detail {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .comm-card.expanded .comm-detail {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .comm-card.expanded .comm-expand-hint {
+            display: none;
+        }
+
+        .comm-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--gold);
+            text-decoration: none;
+            padding: 6px 16px;
+            border: 1px solid var(--gold-border);
+            border-radius: 20px;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+
+        .comm-link:hover {
+            background: var(--gold-muted);
+            border-color: var(--gold);
+        }
+
+        .comm-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, var(--gold), #c9963a);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 16px;
+            transition: all 0.25s;
+            margin-top: 8px;
+            letter-spacing: 0.02em;
+            box-shadow: 0 2px 6px rgba(169, 124, 50, 0.25);
+            white-space: nowrap;
+        }
+
+        .comm-link-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(169, 124, 50, 0.4);
+            filter: brightness(1.08);
+        }
+
+        .comm-loading {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .comm-loading .spinner-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            margin: 0 3px;
+            animation: dotPulse 1.2s ease infinite;
+        }
+
+        .comm-loading .spinner-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .comm-loading .spinner-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .no-community {
+            text-align: center;
+            padding: 32px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
         /* ── Pain Analysis ── */
         .analysis-summary {
             font-size: 0.88rem;
@@ -789,9 +1033,9 @@
             <h1>n8n AI 導入顧問</h1>
             <p class="subtitle">Universal AI Adoption Consultant</p>
             <div class="tags">
-                <span class="tag">TF-IDF 語意匹配</span>
-                <span class="tag">n8n 工作流設計</span>
-                <span class="tag">純 Python 驅動</span>
+                <span class="tag">n8n 社群 7,888+ 工作流</span>
+                <span class="tag">動態 AI 分析</span>
+                <span class="tag">零 API Key</span>
             </div>
         </div>
 
@@ -824,12 +1068,20 @@
                 <div class="dept-chips" id="deptChips">
                     <span style="color: var(--text-light); font-size: 0.78rem;">← 請先輸入營業項目</span>
                 </div>
+                <div id="customDeptWrap" style="display:none; margin-top:8px;">
+                    <input type="text" id="customDeptInput" placeholder="輸入自訂部門名稱..."
+                        style="font-size:0.85rem; padding:8px 12px; border-radius:8px; border:1px solid #ddd; width:200px;">
+                </div>
                 <div class="dept-desc" id="deptDesc"></div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Step 3 — 描述業務痛點</label>
-                <textarea id="painPoint" placeholder="例如：客戶流失率太高，希望能預測哪些客戶會離開並進行精準行銷"></textarea>
+                <label class="form-label">Step 3 — 描述業務痛點（每行一個痛點，可多個）</label>
+                <textarea id="painPoint" placeholder="每行一個痛點，例如：
+產線排程混亂，交期延誤
+刀具庫管理沒有系統化
+品質不良率過高，需要即時監控" style="min-height:120px;"></textarea>
+                <div style="font-size:0.72rem; color:var(--text-light); margin-top:4px;">💡 每行一個痛點 = 一個獨立工作流分析</div>
             </div>
 
             <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">
@@ -838,42 +1090,25 @@
             </button>
         </div>
 
-        <!-- Results -->
-        <div id="results">
-            <div class="result-header" id="resultHeader"></div>
-
-            <div class="card" id="analysisCard">
-                <div class="card-title">痛點分析</div>
-                <div id="analysisContent"></div>
-            </div>
-
-            <div class="card" id="workflowCard">
-                <div class="card-title">n8n 工作流設計</div>
-                <div id="workflowContent"></div>
-            </div>
-
-            <div class="card" id="difficultyCard">
-                <div class="card-title">困難度評估</div>
-                <div id="difficultyContent"></div>
-            </div>
-
-            <div class="card" id="stepsCard">
-                <div class="card-title">實施步驟指南</div>
-                <div id="stepsContent"></div>
-            </div>
-
-            <div class="card" id="altCard" style="display:none;">
-                <div class="card-title">其他可能方案</div>
-                <div id="altContent"></div>
-            </div>
+        <!-- Consultant Mode Toggle -->
+        <div id="consultantToggle" style="display:none; text-align:right; margin-bottom:12px;">
+            <button id="consultantBtn" onclick="toggleConsultantMode()"
+                style="background:linear-gradient(135deg,#2c2c2c,#444); color:#fff; border:none; padding:8px 18px; border-radius:20px; font-size:0.78rem; cursor:pointer; letter-spacing:0.03em; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+                🔒 顧問模式
+            </button>
         </div>
 
-        <div class="footer">n8n AI ADOPTION CONSULTANT — POWERED BY TF-IDF</div>
+        <!-- Results: dynamically populated -->
+        <div id="results"></div>
+
+        <div class="footer">n8n AI ADOPTION CONSULTANT — MULTI PAIN-POINT ANALYSIS</div>
     </div>
 
     <script>
         let selectedDept = '';
         let debounceTimer = null;
+        let currentData = null;
+        let consultantMode = false;
 
         function fillIndustry(chipEl, name) {
             document.getElementById('industryInput').value = name;
@@ -895,8 +1130,10 @@
             const industry = document.getElementById('industryInput').value.trim();
             const container = document.getElementById('deptChips');
             const descEl = document.getElementById('deptDesc');
+            const customWrap = document.getElementById('customDeptWrap');
             selectedDept = '';
             descEl.classList.remove('visible');
+            customWrap.style.display = 'none';
 
             if (!industry) {
                 container.innerHTML = '<span style="color: var(--text-light); font-size: 0.78rem;">← 請先輸入營業項目</span>';
@@ -907,12 +1144,7 @@
             const data = await res.json();
             container.innerHTML = '';
 
-            if (data.departments.length === 0) {
-                container.innerHTML = '<span style="color: var(--text-light); font-size: 0.78rem;">此產業不在預設對應表中，系統將使用均等維度權重分析</span>';
-                selectedDept = '';
-                return;
-            }
-
+            // 全部門 chip
             const allChip = document.createElement('span');
             allChip.className = 'dept-chip active';
             allChip.textContent = '全部門';
@@ -921,46 +1153,108 @@
                 container.querySelectorAll('.dept-chip').forEach(c => c.classList.remove('active'));
                 allChip.classList.add('active');
                 descEl.classList.remove('visible');
+                customWrap.style.display = 'none';
             };
             container.appendChild(allChip);
 
-            data.departments.forEach(name => {
-                const chip = document.createElement('span');
-                chip.className = 'dept-chip';
-                chip.textContent = name;
-                chip.onclick = () => {
-                    selectedDept = name;
-                    container.querySelectorAll('.dept-chip').forEach(c => c.classList.remove('active'));
-                    chip.classList.add('active');
-                    const detail = data.details[name];
-                    if (detail) {
-                        descEl.textContent = `${detail.description}　|　主要維度：${detail.primary_dimensions.join(', ')}`;
-                        descEl.classList.add('visible');
-                    }
-                };
-                container.appendChild(chip);
+            // 預設部門 chips
+            if (data.departments && data.departments.length > 0) {
+                data.departments.forEach(name => {
+                    const chip = document.createElement('span');
+                    chip.className = 'dept-chip';
+                    chip.textContent = name;
+                    chip.onclick = () => {
+                        selectedDept = name;
+                        container.querySelectorAll('.dept-chip').forEach(c => c.classList.remove('active'));
+                        chip.classList.add('active');
+                        customWrap.style.display = 'none';
+                        const detail = data.details[name];
+                        if (detail) {
+                            descEl.textContent = `${detail.description}　|　主要維度：${detail.primary_dimensions.join(', ')}`;
+                            descEl.classList.add('visible');
+                        }
+                    };
+                    container.appendChild(chip);
+                });
+            }
+
+            // ✏️ 自訂 chip
+            const customChip = document.createElement('span');
+            customChip.className = 'dept-chip';
+            customChip.textContent = '✏️ 自訂';
+            customChip.style.borderStyle = 'dashed';
+            customChip.onclick = () => {
+                container.querySelectorAll('.dept-chip').forEach(c => c.classList.remove('active'));
+                customChip.classList.add('active');
+                customWrap.style.display = 'block';
+                document.getElementById('customDeptInput').focus();
+                descEl.classList.remove('visible');
+            };
+            container.appendChild(customChip);
+
+            // 監聽自訂輸入
+            document.getElementById('customDeptInput').oninput = (e) => {
+                selectedDept = e.target.value.trim();
+            };
+        }
+
+        // ══════════════════════════════════════
+        //  顧問模式切換
+        // ══════════════════════════════════════
+        function toggleConsultantMode() {
+            consultantMode = !consultantMode;
+            const btn = document.getElementById('consultantBtn');
+            btn.textContent = consultantMode ? '🔓 顧問模式 ON' : '🔒 顧問模式';
+            btn.style.background = consultantMode
+                ? 'linear-gradient(135deg, var(--gold), #c9963a)'
+                : 'linear-gradient(135deg,#2c2c2c,#444)';
+            // 切換所有社群區塊顯示
+            document.querySelectorAll('.pp-community-section').forEach(el => {
+                el.style.display = consultantMode ? 'block' : 'none';
             });
         }
 
+        // ══════════════════════════════════════
+        //  Tab 切換（per pain-point）
+        // ══════════════════════════════════════
+        function switchPPTab(ppIndex, tab) {
+            const wrapper = document.getElementById(`pp-${ppIndex}`);
+            if (!wrapper) return;
+            wrapper.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            wrapper.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            const tabBtn = wrapper.querySelector(`.tab-btn[data-tab="${tab}"]`);
+            const tabPanel = wrapper.querySelector(`#pp-${ppIndex}-panel-${tab}`);
+            if (tabBtn) tabBtn.classList.add('active');
+            if (tabPanel) tabPanel.classList.add('active');
+        }
+
+        // ══════════════════════════════════════
+        //  主分析
+        // ══════════════════════════════════════
         async function analyze() {
             const industry = document.getElementById('industryInput').value.trim();
-            const painPoint = document.getElementById('painPoint').value.trim();
+            const painText = document.getElementById('painPoint').value.trim();
             if (!industry) { alert('請輸入您的營業項目'); return; }
-            if (painPoint.length < 4) { alert('痛點描述至少 4 個字'); return; }
+            if (painText.length < 4) { alert('痛點描述至少 4 個字'); return; }
+
+            // 拆分多痛點（換行或 ; 分隔）
+            const painPoints = painText.split(/[\n;；]/).map(s => s.trim()).filter(s => s.length >= 2);
+            if (painPoints.length === 0) { alert('請輸入至少一個痛點'); return; }
 
             const btn = document.getElementById('analyzeBtn');
             btn.classList.add('loading');
             btn.disabled = true;
-            btn.querySelector('.btn-text').textContent = '深度分析中...';
+            btn.querySelector('.btn-text').textContent = `分析中... (${painPoints.length} 個痛點)`;
 
             try {
                 const res = await fetch('/api/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ industry, department: selectedDept, pain_point: painPoint }),
+                    body: JSON.stringify({ industry, department: selectedDept, pain_points: painPoints }),
                 });
                 const data = await res.json();
-                renderResults(data);
+                currentData = data;
+                renderAllResults(data);
             } catch (e) {
                 alert('分析失敗: ' + e.message);
             } finally {
@@ -970,58 +1264,90 @@
             }
         }
 
-        function renderResults(data) {
-            const results = document.getElementById('results');
-            results.classList.add('visible');
+        // ══════════════════════════════════════
+        //  渲染全部結果（多痛點）
+        // ══════════════════════════════════════
+        function renderAllResults(data) {
+            const container = document.getElementById('results');
+            const results = data.results || [];
+            container.innerHTML = '';
+            container.classList.add('visible');
 
-            // ── 1. Solution Header ──
-            document.getElementById('resultHeader').innerHTML = `
-                <div style="flex:1">
-                    <div class="solution-badge">動態分析結果</div>
-                    <div class="solution-title">${data.solution_name}</div>
-                    <div class="solution-desc">${data.workflow.description}</div>
-                    <div class="solution-meta">${data.industry} / ${data.department}</div>
-                </div>
-                <div class="difficulty-block">
-                    <div class="difficulty-number">${data.difficulty}</div>
-                    <div class="difficulty-stars">${data.difficulty_display}</div>
-                    <div class="difficulty-label-sm">DIFFICULTY</div>
-                </div>
-            `;
+            // 顯示顧問模式按鈕
+            document.getElementById('consultantToggle').style.display = 'block';
 
-            // ── 1.5 Pain Analysis ──
-            const analysisContent = document.getElementById('analysisContent');
-            let analysisHtml = '';
-
-            if (data.pain_summary) {
-                analysisHtml += `<div class="analysis-summary">${data.pain_summary}</div>`;
+            if (results.length === 0) {
+                container.innerHTML = '<div class="card"><div class="card-title">無分析結果</div></div>';
+                return;
             }
 
-            const dims = [
-                { label: '核心關鍵字', items: data.detected_keywords || [], cls: 'gold' },
-                { label: '資料來源', items: data.detected_sources || [], cls: '' },
-                { label: '處理動作', items: data.detected_actions || [], cls: '' },
-                { label: '輸出方式', items: data.detected_outputs || [], cls: '' },
-                { label: '複雜度因素', items: data.detected_complexity || [], cls: 'warn' },
-            ];
+            results.forEach((r, idx) => {
+                const commCount = (r.community || []).length;
+                const ppId = `pp-${idx}`;
 
-            dims.forEach(d => {
-                if (d.items.length > 0) {
-                    analysisHtml += `<div class="dim-group">`;
-                    analysisHtml += `<span class="dim-label">${d.label}</span>`;
-                    analysisHtml += `<div class="detected-dims">`;
-                    d.items.forEach(item => {
-                        analysisHtml += `<span class="dim-tag ${d.cls}">${item}</span>`;
-                    });
-                    analysisHtml += `</div></div>`;
-                }
+                let html = `
+                <div class="card" id="${ppId}" style="margin-bottom:20px;">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+                        <span style="background:linear-gradient(135deg, var(--gold), #c9963a); color:#fff; font-size:0.72rem; font-weight:700; padding:4px 10px; border-radius:12px;">痛點 ${idx + 1}</span>
+                        <span style="font-size:1.05rem; font-weight:600; color:var(--text-primary);">${r.pain_point}</span>
+                    </div>
+
+                    <!-- Pain Analysis -->
+                    ${renderPainAnalysis(r)}
+
+                    <!-- Tabs -->
+                    <div class="tabs" style="margin-top:16px;">
+                        <button class="tab-btn active" data-tab="local" onclick="switchPPTab(${idx},'local')">🔧 本地 AI 分析</button>
+                        <button class="tab-btn pp-community-tab" data-tab="community" onclick="switchPPTab(${idx},'community')" style="${consultantMode ? '' : 'display:none;'}">
+                            🌐 n8n 社群參考 <span class="tab-badge">${commCount}</span>
+                        </button>
+                    </div>
+
+                    <!-- Local Tab (default) -->
+                    <div class="tab-panel active" id="${ppId}-panel-local">
+                        ${renderLocalHTML(r.local || {})}
+                    </div>
+
+                    <!-- Community Tab (consultant only) -->
+                    <div class="tab-panel pp-community-section" id="${ppId}-panel-community" style="${consultantMode ? '' : 'display:none;'}">
+                        ${renderCommunityHTML(r.community || [], idx)}
+                    </div>
+                </div>
+                `;
+                container.innerHTML += html;
             });
 
-            analysisContent.innerHTML = analysisHtml;
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
-            // ── 2. n8n Workflow ──
-            const wfContent = document.getElementById('workflowContent');
-            const wf = data.workflow;
+        // ── 痛點分析卡片 ──
+        function renderPainAnalysis(r) {
+            let html = '';
+            if (r.pain_summary) {
+                html += `<div class="analysis-summary">${r.pain_summary}</div>`;
+            }
+            const dims = [
+                { label: '核心關鍵字', items: r.detected_keywords || [], cls: 'gold' },
+                { label: '資料來源', items: r.detected_sources || [], cls: '' },
+                { label: '處理動作', items: r.detected_actions || [], cls: '' },
+                { label: '輸出方式', items: r.detected_outputs || [], cls: '' },
+                { label: '複雜度因素', items: r.detected_complexity || [], cls: 'warn' },
+            ];
+            dims.forEach(d => {
+                if (d.items.length > 0) {
+                    html += `<div class="dim-group"><span class="dim-label">${d.label}</span><div class="detected-dims">`;
+                    d.items.forEach(item => { html += `<span class="dim-tag ${d.cls}">${item}</span>`; });
+                    html += `</div></div>`;
+                }
+            });
+            return html;
+        }
+
+        // ══════════════════════════════════════
+        //  本地 AI 分析 渲染（返 HTML 字串）
+        // ══════════════════════════════════════
+        function renderLocalHTML(local) {
+            const wf = local.workflow || {};
             const nodes = wf.nodes || [];
 
             let nodesHtml = nodes.map((n, i) => {
@@ -1039,66 +1365,142 @@
                 </div>
             `).join('');
 
-            wfContent.innerHTML = `
-                <div style="font-weight:500; font-size:0.9rem; margin-bottom:16px; color:var(--text-primary);">${wf.name}</div>
+            const reasonsHtml = (local.difficulty_reasons || []).map((r, i) => `
+                <div class="reason-item"><div class="reason-num">${i + 1}</div><div>${r}</div></div>
+            `).join('');
+
+            const stepsHtml = (local.steps || []).map(s => `
+                <div class="step-item" data-step="${s.step}">
+                    <div class="step-title">${s.title}</div>
+                    <div class="step-duration">${s.duration || ''}</div>
+                    <div class="step-desc">${s.desc || ''}</div>
+                </div>
+            `).join('');
+
+            return `
+                <div class="result-header">
+                    <div style="flex:1">
+                        <div class="solution-badge">本地 AI 動態分析</div>
+                        <div class="solution-title">${local.solution_name || ''}</div>
+                        <div class="solution-desc">${wf.description || ''}</div>
+                    </div>
+                    <div class="difficulty-block">
+                        <div class="difficulty-number">${local.difficulty || 0}</div>
+                        <div class="difficulty-stars">${local.difficulty_display || ''}</div>
+                        <div class="difficulty-label-sm">DIFFICULTY</div>
+                    </div>
+                </div>
+                <div style="font-weight:500; font-size:0.88rem; margin:16px 0 10px; color:var(--text-primary);">n8n 工作流設計</div>
                 <div class="workflow-flow">${nodesHtml}</div>
                 <div class="divider"></div>
                 ${detailHtml}
-            `;
-
-            // ── 3. Difficulty with Reasons ──
-            const diffContent = document.getElementById('difficultyContent');
-            const reasonsHtml = (data.difficulty_reasons || []).map((r, i) => `
-                <div class="reason-item">
-                    <div class="reason-num">${i + 1}</div>
-                    <div>${r}</div>
-                </div>
-            `).join('');
-
-            diffContent.innerHTML = `
+                <div class="divider" style="margin:20px 0;"></div>
+                <div style="font-weight:500; font-size:0.88rem; margin-bottom:10px; color:var(--text-primary);">困難度評估</div>
                 <div class="difficulty-header">
                     <div>
-                        <div class="diff-score-display">${data.difficulty} / 5</div>
-                        <div class="diff-stars-display">${data.difficulty_display}</div>
+                        <div class="diff-score-display">${local.difficulty || 0} / 5</div>
+                        <div class="diff-stars-display">${local.difficulty_display || ''}</div>
                     </div>
-                    <div style="flex:1;">
-                        <div class="diff-label-text">評分理由</div>
-                    </div>
+                    <div style="flex:1;"><div class="diff-label-text">評分理由</div></div>
                 </div>
                 ${reasonsHtml}
-            `;
+                <div class="divider" style="margin:20px 0;"></div>
+                <div style="font-weight:500; font-size:0.88rem; margin-bottom:10px; color:var(--text-primary);">預估導入成本</div>
+                <div style="background:var(--surface-warm); padding:16px; border-radius:var(--radius); border:1px solid var(--border-light); display:flex; align-items:center; gap:12px;">
+                    <div style="font-size:1.4rem; font-weight:600; color:var(--charcoal);">${local.estimated_cost || 'N/A'}</div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary); background:#fff; padding:4px 8px; border-radius:12px; border:1px solid var(--border);">依節點數與複雜度估算</div>
+                </div>
 
-            // ── 4. Implementation Steps ──
-            const stepsContent = document.getElementById('stepsContent');
-            const stepsHtml = (data.steps || []).map(s => `
-                <div class="step-item" data-step="${s.step}">
-                    <div class="step-title">${s.title}</div>
-                    <div class="step-duration">${s.duration || s.dur || ''}</div>
-                    <div class="step-desc">${s.desc || s.description || ''}</div>
+                <div class="divider" style="margin:20px 0;"></div>
+                <div style="font-weight:500; font-size:0.88rem; margin-bottom:10px; color:var(--text-primary);">實施步驟指南</div>
+                <div class="steps-timeline">${stepsHtml}</div>
+            `;
+        }
+
+        // ══════════════════════════════════════
+        //  社群方案 渲染（返 HTML 字串）
+        // ══════════════════════════════════════
+        function renderCommunityHTML(items, ppIndex) {
+            if (items.length === 0) {
+                return `<div class="no-community">未找到相關社群工作流模板</div>`;
+            }
+            return items.map((wf, i) => {
+                const uid = `comm-${ppIndex}-${i}`;
+                return `
+                <div class="comm-card" id="${uid}" onclick="document.getElementById('${uid}').classList.toggle('expanded')">
+                    <div class="comm-card-header">
+                        <div style="flex:1;">
+                            <div class="comm-card-title">${wf.name}</div>
+                            <div class="comm-card-desc">${wf.description || ''}</div>
+                            <div class="comm-card-meta">
+                                <span>📦 ${wf.node_count || 0} 節點</span>
+                                ${wf.views ? `<span>👁 ${wf.views.toLocaleString()} 次瀏覽</span>` : ''}
+                                ${wf.creator ? `<span>👤 ${wf.creator}</span>` : ''}
+                            </div>
+                            ${wf.url ? `<a class="comm-link-btn" href="${wf.url}" target="_blank" onclick="event.stopPropagation();">🔗 查看 n8n 模板 →</a>` : ''}
+                        </div>
+                        <div class="comm-difficulty">
+                            <div class="comm-difficulty-num">${wf.difficulty}</div>
+                            <div class="comm-difficulty-stars">${wf.difficulty_display}</div>
+                            <div class="comm-expand-hint">點擊展開 ↓</div>
+                        </div>
+                    </div>
+                    <div class="comm-detail" id="${uid}-detail">
+                        ${renderCommunityDetail(wf)}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderCommunityDetail(wf) {
+            const nodes = wf.nodes || [];
+            let nodesHtml = nodes.map((n, i) => {
+                const arrow = i < nodes.length - 1 ? '<span class="wf-arrow">→</span>' : '';
+                return `<span class="wf-node">${n.name}</span>${arrow}`;
+            }).join('');
+
+            let detailHtml = nodes.map((n, i) => `
+                <div class="wf-detail-item">
+                    <div class="wf-detail-num">${i + 1}</div>
+                    <div>
+                        <div><span class="wf-detail-name">${n.name}</span><span class="wf-detail-type">${n.type}</span></div>
+                        <div class="wf-detail-desc">${n.desc}</div>
+                    </div>
                 </div>
             `).join('');
 
-            stepsContent.innerHTML = `<div class="steps-timeline">${stepsHtml}</div>`;
+            const reasonsHtml = (wf.difficulty_reasons || []).map((r, i) => `
+                <div class="reason-item"><div class="reason-num">${i + 1}</div><div>${r}</div></div>
+            `).join('');
 
-            // ── 5. Alternatives ──
-            const altCard = document.getElementById('altCard');
-            const altContent = document.getElementById('altContent');
-            if (data.alternatives && data.alternatives.length > 0) {
-                altCard.style.display = 'block';
-                altContent.innerHTML = data.alternatives.map(a => `
-                    <div class="alt-card">
-                        <span class="alt-name">${a.name}</span>
-                        <div class="alt-meta">
-                            <span>匹配 ${(a.match_score * 100).toFixed(1)}%</span>
-                            <span>困難度 ${a.difficulty_display}</span>
-                        </div>
+            const stepsHtml = (wf.steps || []).map(s => `
+                <div class="step-item" data-step="${s.step}">
+                    <div class="step-title">${s.title}</div>
+                    ${s.duration ? `<div class="step-duration">${s.duration}</div>` : ''}
+                    <div class="step-desc">${s.desc || ''}</div>
+                </div>
+            `).join('');
+
+            return `
+                <div style="font-weight:500; font-size:0.88rem; margin-bottom:12px; color:var(--text-primary);">工作流節點</div>
+                <div class="workflow-flow">${nodesHtml}</div>
+                <div class="divider"></div>
+                ${detailHtml}
+                <div class="divider" style="margin:20px 0;"></div>
+                <div style="font-weight:500; font-size:0.88rem; margin-bottom:12px; color:var(--text-primary);">困難度評估</div>
+                <div class="difficulty-header">
+                    <div>
+                        <div class="diff-score-display">${wf.difficulty} / 5</div>
+                        <div class="diff-stars-display">${wf.difficulty_display}</div>
                     </div>
-                `).join('');
-            } else {
-                altCard.style.display = 'none';
-            }
-
-            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    <div style="flex:1;"><div class="diff-label-text">評分理由</div></div>
+                </div>
+                ${reasonsHtml}
+                <div class="divider" style="margin:20px 0;"></div>
+                <div style="font-weight:500; font-size:0.88rem; margin-bottom:12px; color:var(--text-primary);">實施步驟</div>
+                <div class="steps-timeline">${stepsHtml}</div>
+                ${wf.url ? `<a class="comm-link" href="${wf.url}" target="_blank" onclick="event.stopPropagation();">在 n8n 社群查看 →</a>` : ''}
+            `;
         }
 
         init();

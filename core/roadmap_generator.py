@@ -1,14 +1,15 @@
 """
-roadmap_generator.py — n8n 導入路徑圖產生器（動態版）
+roadmap_generator.py — n8n 導入路徑圖產生器（動態版 + 社群整合）
 
-使用 pain_analyzer + dynamic_composer 動態產出：
-  1. 客製化 n8n 工作流設計
-  2. 動態困難度評分 + 客製理由
-  3. 根據痛點量身打造的實施步驟
+雙引擎：
+  1. n8n 社群搜尋 — 從 7,888+ 社群模板找真實工作流
+  2. 本地動態分析 — jieba + dynamic_composer 自訂組裝
 """
 
 from core.pain_analyzer import analyze_pain_point
-from core.dynamic_composer import compose_workflow, compose_difficulty, compose_steps
+from core.pain_analyzer import analyze_pain_point
+from core.dynamic_composer import compose_workflow, compose_difficulty, compose_steps, compose_cost
+from core.n8n_community import search_and_enrich
 
 
 def _stars(n):
@@ -18,42 +19,36 @@ def _stars(n):
 
 def generate_roadmap(matched_solutions, industry_name, department_name=None, user_query=""):
     """
-    產生 n8n 導入路徑圖。
-
-    流程：
-    1. pain_analyzer 分析痛點文字
-    2. dynamic_composer 動態組裝工作流
-    3. dynamic_composer 動態計算困難度
-    4. dynamic_composer 動態產出實施步驟
-    5. TF-IDF 匹配結果作為替代方案
+    產生 n8n 導入路徑圖（雙引擎）。
 
     Returns
     -------
-    dict
+    dict with: local_analysis + community_results
     """
-    # ── 1. 分析痛點 ──
+    # ── 1. 本地痛點分析 ──
     analysis = analyze_pain_point(user_query, industry_name, department_name or "")
 
-    # ── 2. 動態組裝工作流 ──
+    # ── 2. 本地動態工作流 ──
     workflow = compose_workflow(analysis, industry_name, user_query)
-
-    # ── 3. 動態計算困難度 ──
     difficulty, difficulty_reasons = compose_difficulty(analysis, len(workflow["nodes"]))
-
-    # ── 4. 動態產出步驟 ──
     steps = compose_steps(analysis, workflow["nodes"], difficulty)
+    cost_estimate = compose_cost(len(workflow["nodes"]), difficulty)
 
-    # ── 5. 組裝結果 ──
+    # ── 3. n8n 社群搜尋 ──
+    keywords = analysis.get("keywords", [])
+    community_results = []
+    try:
+        community_results = search_and_enrich(keywords, industry_name, max_results=5)
+    except Exception as e:
+        print(f"[roadmap] Community search failed: {e}")
+
+    # ── 4. 組裝結果 ──
     roadmap = {
         "industry": industry_name,
         "department": department_name or "全部門",
         "user_query": user_query,
-        "match_score": matched_solutions[0]["similarity"] if matched_solutions else 0,
 
-        # 動態產出的方案
-        "solution_name": workflow["name"],
-
-        # 痛點分析摘要 ★ 新增
+        # 痛點分析
         "pain_summary": analysis["pain_summary"],
         "detected_keywords": analysis["keywords"][:6],
         "detected_sources": analysis["data_sources"],
@@ -61,25 +56,27 @@ def generate_roadmap(matched_solutions, industry_name, department_name=None, use
         "detected_outputs": analysis["outputs"],
         "detected_complexity": analysis["complexity"],
 
-        # 動態工作流
-        "workflow": workflow,
+        # ── 本地 AI 分析 ──
+        "local": {
+            "solution_name": workflow["name"],
+            "workflow": workflow,
+            "difficulty": difficulty,
+            "difficulty_display": _stars(difficulty),
+            "difficulty_reasons": difficulty_reasons,
+            "steps": steps,
+            "estimated_cost": cost_estimate,
+            "match_score": matched_solutions[0]["similarity"] if matched_solutions else 0,
+            "alternatives": [],
+        },
 
-        # 動態困難度
-        "difficulty": difficulty,
-        "difficulty_display": _stars(difficulty),
-        "difficulty_reasons": difficulty_reasons,
-
-        # 動態步驟
-        "steps": steps,
-
-        # TF-IDF 匹配作為替代方案
-        "alternatives": [],
+        # ── n8n 社群方案 ──
+        "community": community_results,
     }
 
-    # 替代方案（來自靜態庫的 TF-IDF 匹配結果）
+    # TF-IDF 替代方案
     for alt in matched_solutions[:3]:
         alt_sol = alt["solution"]
-        roadmap["alternatives"].append({
+        roadmap["local"]["alternatives"].append({
             "name": alt_sol["name"],
             "match_score": alt["similarity"],
             "difficulty": alt_sol["difficulty"],
