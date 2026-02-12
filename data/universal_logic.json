@@ -1,0 +1,132 @@
+{
+  "dimensions": {
+    "perception": {
+      "name_zh": "感知",
+      "name_en": "Perception",
+      "description": "透過感測器、影像、語音等方式擷取外部世界的數據，將非結構化資訊轉為可處理的數位信號。",
+      "sub_capabilities": [
+        {
+          "id": "image_recognition",
+          "name": "影像辨識",
+          "keywords": ["影像", "圖片", "辨識", "視覺", "偵測", "image", "recognition", "detection", "computer vision", "OCR"]
+        },
+        {
+          "id": "speech_recognition",
+          "name": "語音辨識",
+          "keywords": ["語音", "聲音", "辨識", "STT", "speech", "voice", "audio", "transcription"]
+        },
+        {
+          "id": "ocr",
+          "name": "光學字元辨識",
+          "keywords": ["OCR", "文字辨識", "掃描", "文件", "document", "scan", "text extraction"]
+        },
+        {
+          "id": "iot_sensing",
+          "name": "IoT 感測",
+          "keywords": ["IoT", "感測器", "sensor", "溫度", "濕度", "壓力", "設備監控", "edge", "邊緣運算"]
+        },
+        {
+          "id": "video_analytics",
+          "name": "影像分析",
+          "keywords": ["影片", "監控", "追蹤", "video", "surveillance", "tracking", "即時"]
+        }
+      ]
+    },
+    "cognition": {
+      "name_zh": "認知",
+      "name_en": "Cognition",
+      "description": "對擷取的數據進行理解、推理與知識萃取，從數據中提取意義與洞察。",
+      "sub_capabilities": [
+        {
+          "id": "nlp_sentiment",
+          "name": "NLP 情感分析",
+          "keywords": ["情感", "輿情", "NLP", "sentiment", "文字分析", "語意", "正負面", "評論"]
+        },
+        {
+          "id": "knowledge_graph",
+          "name": "知識圖譜",
+          "keywords": ["知識圖譜", "knowledge graph", "關聯", "實體", "ontology", "語意網路"]
+        },
+        {
+          "id": "semantic_search",
+          "name": "語意搜尋",
+          "keywords": ["搜尋", "語意", "semantic", "search", "相關性", "推薦", "retrieval"]
+        },
+        {
+          "id": "document_understanding",
+          "name": "文件理解",
+          "keywords": ["文件", "合約", "摘要", "分類", "document", "understanding", "classification", "summarization"]
+        },
+        {
+          "id": "chatbot",
+          "name": "智能客服",
+          "keywords": ["客服", "對話", "chatbot", "FAQ", "問答", "機器人", "自動回覆", "chat"]
+        }
+      ]
+    },
+    "prediction": {
+      "name_zh": "預測",
+      "name_en": "Prediction",
+      "description": "基於歷史與即時數據建立模型，對未來趨勢、行為或事件進行預測與評估。",
+      "sub_capabilities": [
+        {
+          "id": "demand_forecast",
+          "name": "需求預測",
+          "keywords": ["需求", "預測", "demand", "forecast", "銷量", "庫存", "備貨", "趨勢"]
+        },
+        {
+          "id": "risk_assessment",
+          "name": "風險評估",
+          "keywords": ["風險", "risk", "評估", "信用", "違約", "異常", "fraud", "欺詐", "偵測"]
+        },
+        {
+          "id": "trend_analysis",
+          "name": "趨勢分析",
+          "keywords": ["趨勢", "分析", "trend", "時序", "time series", "成長", "market"]
+        },
+        {
+          "id": "churn_prediction",
+          "name": "客戶流失預測",
+          "keywords": ["流失", "churn", "客戶", "留存", "retention", "預測", "customer"]
+        },
+        {
+          "id": "predictive_maintenance",
+          "name": "預測性維護",
+          "keywords": ["維護", "maintenance", "設備", "故障", "預測", "downtime", "predictive"]
+        }
+      ]
+    },
+    "automation": {
+      "name_zh": "自動化",
+      "name_en": "Automation",
+      "description": "將經分析與決策後的行動方案自動執行，減少人力介入並提升作業效率。",
+      "sub_capabilities": [
+        {
+          "id": "rpa",
+          "name": "流程自動化 (RPA)",
+          "keywords": ["RPA", "自動化", "流程", "機器人", "robotic", "automation", "重複", "作業"]
+        },
+        {
+          "id": "workflow_automation",
+          "name": "工作流自動化",
+          "keywords": ["工作流", "workflow", "自動化", "排程", "觸發", "trigger", "pipeline", "n8n"]
+        },
+        {
+          "id": "auto_reply",
+          "name": "自動回覆與通知",
+          "keywords": ["自動回覆", "通知", "email", "notification", "alert", "推播", "訊息"]
+        },
+        {
+          "id": "data_pipeline",
+          "name": "資料管道自動化",
+          "keywords": ["ETL", "資料", "管道", "pipeline", "data", "同步", "整合", "integration"]
+        },
+        {
+          "id": "smart_scheduling",
+          "name": "智能排程",
+          "keywords": ["排程", "scheduling", "排班", "調度", "optimization", "資源分配"]
+        }
+      ]
+    }
+  }
+}

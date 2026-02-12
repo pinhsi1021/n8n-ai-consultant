@@ -1,0 +1,406 @@
+{
+    "industries": {
+        "零售": {
+            "name_en": "Retail",
+            "departments": {
+                "店務管理": {
+                    "description": "門店日常營運、人員管理與顧客服務",
+                    "primary_dimensions": [
+                        "perception",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "人流分析",
+                        "排班效率低",
+                        "庫存盤點耗時",
+                        "顧客體驗差"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.35,
+                        "cognition": 0.15,
+                        "prediction": 0.2,
+                        "automation": 0.3
+                    }
+                },
+                "採購": {
+                    "description": "商品採購、供應商管理與庫存補貨決策",
+                    "primary_dimensions": [
+                        "prediction",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "備貨不準確",
+                        "缺貨或庫存過多",
+                        "供應商選擇困難",
+                        "補貨效率低"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.15,
+                        "prediction": 0.5,
+                        "automation": 0.3
+                    }
+                },
+                "行銷": {
+                    "description": "顧客行銷、會員經營與促銷策略",
+                    "primary_dimensions": [
+                        "cognition",
+                        "prediction"
+                    ],
+                    "typical_pain_points": [
+                        "客戶流失",
+                        "行銷效益低",
+                        "顧客分群困難",
+                        "促銷無法精準"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.3,
+                        "prediction": 0.4,
+                        "automation": 0.25
+                    }
+                },
+                "客服": {
+                    "description": "顧客服務、退換貨處理與售後支援",
+                    "primary_dimensions": [
+                        "cognition",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "客服人力不足",
+                        "回覆速度慢",
+                        "重複問題多",
+                        "客訴處理效率差"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.4,
+                        "prediction": 0.1,
+                        "automation": 0.45
+                    }
+                }
+            }
+        },
+        "製造": {
+            "name_en": "Manufacturing",
+            "departments": {
+                "生產管理": {
+                    "description": "產線排程、生產效率監控與品質控管",
+                    "primary_dimensions": [
+                        "perception",
+                        "prediction"
+                    ],
+                    "typical_pain_points": [
+                        "產線效率低",
+                        "品質不穩定",
+                        "設備故障頻繁",
+                        "排程困難"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.3,
+                        "cognition": 0.1,
+                        "prediction": 0.35,
+                        "automation": 0.25
+                    }
+                },
+                "品質管控": {
+                    "description": "產品品質檢測、瑕疵偵測與品質追溯",
+                    "primary_dimensions": [
+                        "perception",
+                        "cognition"
+                    ],
+                    "typical_pain_points": [
+                        "瑕疵檢測靠人工",
+                        "品質標準不一致",
+                        "不良率高",
+                        "追溯困難"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.5,
+                        "cognition": 0.2,
+                        "prediction": 0.15,
+                        "automation": 0.15
+                    }
+                },
+                "設備維護": {
+                    "description": "設備保養、故障排除與預防性維護",
+                    "primary_dimensions": [
+                        "perception",
+                        "prediction"
+                    ],
+                    "typical_pain_points": [
+                        "設備突然故障",
+                        "維護成本高",
+                        "停機損失大",
+                        "備品管理困難"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.3,
+                        "cognition": 0.1,
+                        "prediction": 0.4,
+                        "automation": 0.2
+                    }
+                },
+                "供應鏈": {
+                    "description": "原料採購、供應商協作與物流管理",
+                    "primary_dimensions": [
+                        "prediction",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "交期不準確",
+                        "供應中斷風險",
+                        "庫存堆積",
+                        "物流成本高"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.15,
+                        "prediction": 0.45,
+                        "automation": 0.35
+                    }
+                }
+            }
+        },
+        "金融": {
+            "name_en": "Finance",
+            "departments": {
+                "風控": {
+                    "description": "信用風險評估、反欺詐偵測與合規監控",
+                    "primary_dimensions": [
+                        "prediction",
+                        "cognition"
+                    ],
+                    "typical_pain_points": [
+                        "欺詐偵測不即時",
+                        "信用評估不準確",
+                        "合規審查耗時",
+                        "風險模型老舊"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.1,
+                        "cognition": 0.25,
+                        "prediction": 0.45,
+                        "automation": 0.2
+                    }
+                },
+                "客戶服務": {
+                    "description": "客戶諮詢、帳戶管理與投訴處理",
+                    "primary_dimensions": [
+                        "cognition",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "客服效率低",
+                        "客戶等待時間長",
+                        "跨通路體驗差",
+                        "人工處理多"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.35,
+                        "prediction": 0.1,
+                        "automation": 0.5
+                    }
+                },
+                "投資研究": {
+                    "description": "市場分析、投資策略與研究報告產出",
+                    "primary_dimensions": [
+                        "cognition",
+                        "prediction"
+                    ],
+                    "typical_pain_points": [
+                        "資訊過載",
+                        "分析速度慢",
+                        "趨勢判斷困難",
+                        "報告撰寫耗時"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.35,
+                        "prediction": 0.45,
+                        "automation": 0.15
+                    }
+                },
+                "營運作業": {
+                    "description": "交易結算、報表產出與帳務處理",
+                    "primary_dimensions": [
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "人工作業多",
+                        "報表產出慢",
+                        "資料不一致",
+                        "對帳效率差"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.1,
+                        "prediction": 0.1,
+                        "automation": 0.75
+                    }
+                }
+            }
+        },
+        "醫療": {
+            "name_en": "Healthcare",
+            "departments": {
+                "臨床診斷": {
+                    "description": "輔助診斷、醫學影像分析與病歷管理",
+                    "primary_dimensions": [
+                        "perception",
+                        "cognition"
+                    ],
+                    "typical_pain_points": [
+                        "影像判讀耗時",
+                        "診斷依賴經驗",
+                        "病歷資料分散",
+                        "誤診風險"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.4,
+                        "cognition": 0.35,
+                        "prediction": 0.15,
+                        "automation": 0.1
+                    }
+                },
+                "藥事管理": {
+                    "description": "藥品管理、處方審核與用藥安全",
+                    "primary_dimensions": [
+                        "cognition",
+                        "prediction"
+                    ],
+                    "typical_pain_points": [
+                        "藥物交互作用檢查慢",
+                        "庫存管理不精確",
+                        "處方錯誤",
+                        "過期藥品"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.1,
+                        "cognition": 0.3,
+                        "prediction": 0.35,
+                        "automation": 0.25
+                    }
+                },
+                "行政管理": {
+                    "description": "掛號排程、人員調度與文書處理",
+                    "primary_dimensions": [
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "掛號排隊久",
+                        "排班困難",
+                        "文書工作多",
+                        "流程繁瑣"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.1,
+                        "prediction": 0.15,
+                        "automation": 0.7
+                    }
+                },
+                "患者管理": {
+                    "description": "患者追蹤、健康管理與再入院預防",
+                    "primary_dimensions": [
+                        "prediction",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "病患追蹤困難",
+                        "再入院率高",
+                        "慢性病管理不足",
+                        "通知不即時"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.1,
+                        "cognition": 0.2,
+                        "prediction": 0.4,
+                        "automation": 0.3
+                    }
+                }
+            }
+        },
+        "物流": {
+            "name_en": "Logistics",
+            "departments": {
+                "倉儲管理": {
+                    "description": "倉庫作業、庫存管理與揀貨效率",
+                    "primary_dimensions": [
+                        "perception",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "揀貨效率低",
+                        "庫存不準確",
+                        "空間利用差",
+                        "盤點耗時"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.3,
+                        "cognition": 0.1,
+                        "prediction": 0.2,
+                        "automation": 0.4
+                    }
+                },
+                "運輸配送": {
+                    "description": "路線規劃、車隊管理與配送追蹤",
+                    "primary_dimensions": [
+                        "prediction",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "配送路線不佳",
+                        "車輛調度困難",
+                        "配送延遲",
+                        "油耗成本高"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.15,
+                        "cognition": 0.1,
+                        "prediction": 0.35,
+                        "automation": 0.4
+                    }
+                },
+                "客戶管理": {
+                    "description": "客戶訂單追蹤、客訴處理與滿意度管理",
+                    "primary_dimensions": [
+                        "cognition",
+                        "automation"
+                    ],
+                    "typical_pain_points": [
+                        "訂單狀態查詢多",
+                        "客訴處理慢",
+                        "客戶滿意度低",
+                        "溝通效率差"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.35,
+                        "prediction": 0.15,
+                        "automation": 0.45
+                    }
+                },
+                "需求規劃": {
+                    "description": "貨量預測、資源調度與季節性規劃",
+                    "primary_dimensions": [
+                        "prediction"
+                    ],
+                    "typical_pain_points": [
+                        "貨量預測不準",
+                        "旺季人力不足",
+                        "資源浪費",
+                        "成本控制困難"
+                    ],
+                    "dimension_weights": {
+                        "perception": 0.05,
+                        "cognition": 0.15,
+                        "prediction": 0.55,
+                        "automation": 0.25
+                    }
+                }
+            }
+        }
+    }
+}

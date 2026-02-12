@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI 導入顧問系統</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --accent: #06b6d4;
+            --accent-light: #22d3ee;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-dark: #0f0f23;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #1f1f35;
+            --bg-input: #16162a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #2d2d4a;
+            --glow-primary: rgba(99, 102, 241, 0.3);
+            --glow-accent: rgba(6, 182, 212, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Animated Background ── */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-glow-1 {
+            top: -200px;
+            right: -200px;
+            background: var(--primary);
+            animation: float1 15s ease-in-out infinite;
+        }
+
+        .bg-glow-2 {
+            bottom: -200px;
+            left: -200px;
+            background: var(--accent);
+            animation: float2 18s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-80px, 60px);
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(60px, -80px);
+            }
+        }
+
+        /* ── Layout ── */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 8px;
+        }
+
+        .header .tags {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            color: var(--primary-light);
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 30px var(--glow-primary);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon {
+            font-size: 1.3rem;
+        }
+
+        /* ── Form ── */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--glow-primary);
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.6;
+        }
+
+        .example-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .example-chips .label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            padding: 5px 0;
+            width: 100%;
+        }
+
+        .example-chip {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--primary-light);
+            font-size: 0.8rem;
+            padding: 5px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .example-chip:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .example-chip.selected {
+            background: rgba(99, 102, 241, 0.25);
+            border-color: var(--primary-light);
+        }
+
+        .dept-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .dept-chip {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            color: var(--accent-light);
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dept-chip:hover,
+        .dept-chip.active {
+            background: rgba(6, 182, 212, 0.25);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .dept-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-left: 2px solid var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .dept-desc.visible {
+            opacity: 1;
+        }
+
+        /* ── Button ── */
+        .btn-analyze {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-analyze:active {
+            transform: translateY(0);
+        }
+
+        .btn-analyze:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-analyze .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .btn-analyze.loading .spinner {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── Results ── */
+        #results {
+            display: none;
+        }
+
+        #results.visible {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.08));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .result-header .meta-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .result-header .meta-value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .result-header .stars {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* ── Solution Header ── */
+        .solution-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        .solution-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .solution-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ── Difficulty Reasons ── */
+        .difficulty-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-score-big {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .difficulty-stars-big {
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+        }
+
+        .difficulty-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .reason-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .reason-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .reason-item:hover {
+            background: rgba(99, 102, 241, 0.06);
+            transform: translateX(4px);
+        }
+
+        .reason-num {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        /* ── Implementation Steps Timeline ── */
+        .steps-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .steps-timeline::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--accent), var(--success));
+        }
+
+        .step-item {
+            position: relative;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .step-item:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(4px);
+        }
+
+        .step-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: -32px;
+            top: 18px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .step-duration {
+            display: inline-block;
+            font-size: 0.72rem;
+            padding: 2px 10px;
+            border-radius: 10px;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ── Alternatives ── */
+        .alt-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+        }
+
+        .alt-card .alt-name {
+            font-weight: 600;
+        }
+
+        .alt-card .alt-meta {
+            display: flex;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+
+        /* ── Workflow ── */
+        .workflow-flow {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 16px;
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+
+        .wf-node {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .wf-node:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .wf-arrow {
+            color: var(--primary-light);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .wf-nodes-detail {
+            margin-top: 12px;
+        }
+
+        .wf-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.85rem;
+        }
+
+        .wf-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .wf-detail-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .wf-detail-type {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* ── Next Steps ── */
+        .next-steps {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.06));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+
+        .next-steps ol {
+            padding-left: 20px;
+        }
+
+        .next-steps li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .result-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">🤖</div>
+            <h1>通用 AI 導入顧問系統</h1>
+            <p>Universal AI Adoption Consultant</p>
+            <div class="tags">
+                <span class="tag">🧠 輕量級 TF-IDF</span>
+                <span class="tag">🚫 無 LLM 框架</span>
+                <span class="tag">🐍 純 Python 驅動</span>
+                <span class="tag">🔄 n8n 工作流</span>
+            </div>
+        </div>
+
+        <!-- Input Card -->
+        <div class="card" id="inputCard">
+            <div class="card-title"><span class="icon">📋</span> 分析設定</div>
+
+            <div class="form-group">
+                <label class="form-label">Step 1 — 輸入您的營業項目 / 產業</label>
+                <input type="text" id="industryInput" placeholder="請輸入您的產業，例如：電商、餐飲、半導體、保險、物業管理...">
+                <div class="example-chips">
+                    <span class="label">💡 常見範例（點擊快速填入）：</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '零售')">🛒 零售</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '製造')">🏭 製造</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '金融')">🏦 金融</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '醫療')">🏥 醫療</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '物流')">🚚 物流</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '電商')">📦 電商</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '餐飲')">🍽️ 餐飲</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '教育')">🎓 教育</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '營建')">🏗️ 營建</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '半導體')">💾 半導體</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '保險')">🛡️ 保險</span>
+                    <span class="example-chip" onclick="fillIndustry(this, '旅遊')">✈️ 旅遊</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Step 2 — 選擇部門 (可選)</label>
+                <div class="dept-chips" id="deptChips">
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">← 請先輸入營業項目</span>
+                </div>
+                <div class="dept-desc" id="deptDesc"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Step 3 — 描述業務痛點</label>
+                <textarea id="painPoint" placeholder="例如：客戶流失率太高，希望能預測哪些客戶會離開並進行精準行銷..."></textarea>
+            </div>
+
+            <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">
+                <span class="spinner"></span>
+                <span class="btn-text">🔍 開始分析</span>
+            </button>
+        </div>
+
+        <!-- Results -->
+        <div id="results">
+            <!-- Solution Header -->
+            <div class="result-header" id="resultHeader"></div>
+
+            <!-- n8n Workflow -->
+            <div class="card" id="workflowCard">
+                <div class="card-title"><span class="icon">🔄</span> n8n 工作流設計</div>
+                <div id="workflowContent"></div>
+            </div>
+
+            <!-- Difficulty -->
+            <div class="card" id="difficultyCard">
+                <div class="card-title"><span class="icon">📊</span> 困難度評估</div>
+                <div id="difficultyContent"></div>
+            </div>
+
+            <!-- Implementation Steps -->
+            <div class="card" id="stepsCard">
+                <div class="card-title"><span class="icon">📋</span> 實施步驟指南</div>
+                <div id="stepsContent"></div>
+            </div>
+
+            <!-- Alternatives -->
+            <div class="card" id="altCard" style="display:none;">
+                <div class="card-title"><span class="icon">💡</span> 其他可能方案</div>
+                <div id="altContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedDept = '';
+        let debounceTimer = null;
+
+        // ── Fill industry from example chip ──
+        function fillIndustry(chipEl, name) {
+            document.getElementById('industryInput').value = name;
+            document.querySelectorAll('.example-chip').forEach(c => c.classList.remove('selected'));
+            chipEl.classList.add('selected');
+            loadDepartments();
+        }
+
+        // ── Init: listen for manual input ──
+        function init() {
+            const input = document.getElementById('industryInput');
+            input.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                document.querySelectorAll('.example-chip').forEach(c => c.classList.remove('selected'));
+                debounceTimer = setTimeout(loadDepartments, 400);
+            });
+        }
+
+        // ── Load departments when industry changes ──
+        async function loadDepartments() {
+            const industry = document.getElementById('industryInput').value.trim();
+            const container = document.getElementById('deptChips');
+            const descEl = document.getElementById('deptDesc');
+            selectedDept = '';
+            descEl.classList.remove('visible');
+
+            if (!industry) {
+                container.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">← 請先輸入營業項目</span>';
+                return;
+            }
+
+            const res = await fetch(`/api/departments?industry=${encodeURIComponent(industry)}`);
+            const data = await res.json();
+            container.innerHTML = '';
+
+            if (data.departments.length === 0) {
+                container.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">ℹ️ 此產業不在預設對應表中，系統將使用均等維度權重進行分析</span>';
+                selectedDept = '';
+                return;
+            }
+
+            const allChip = document.createElement('span');
+            allChip.className = 'dept-chip active';
+            allChip.textContent = '📋 全部門';
+            allChip.onclick = () => {
+                selectedDept = '';
+                container.querySelectorAll('.dept-chip').forEach(c => c.classList.remove('active'));
+                allChip.classList.add('active');
+                descEl.classList.remove('visible');
+            };
+            container.appendChild(allChip);
+
+            data.departments.forEach(name => {
+                const chip = document.createElement('span');
+                chip.className = 'dept-chip';
+                chip.textContent = name;
+                chip.onclick = () => {
+                    selectedDept = name;
+                    container.querySelectorAll('.dept-chip').forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    const detail = data.details[name];
+                    if (detail) {
+                        descEl.textContent = `${detail.description}　|　主要維度：${detail.primary_dimensions.join(', ')}`;
+                        descEl.classList.add('visible');
+                    }
+                };
+                container.appendChild(chip);
+            });
+        }
+
+        // ── Analyze ──
+        async function analyze() {
+            const industry = document.getElementById('industryInput').value.trim();
+            const painPoint = document.getElementById('painPoint').value.trim();
+            if (!industry) { alert('請輸入您的營業項目 / 產業'); return; }
+            if (painPoint.length < 4) { alert('痛點描述至少 4 個字'); return; }
+
+            const btn = document.getElementById('analyzeBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            btn.querySelector('.btn-text').textContent = '分析中...';
+
+            try {
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ industry, department: selectedDept, pain_point: painPoint }),
+                });
+                const data = await res.json();
+                renderResults(data);
+            } catch (e) {
+                alert('分析失敗: ' + e.message);
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = '🔍 開始分析';
+            }
+        }
+
+        // ── Render Results ──
+        function renderResults(data) {
+            const results = document.getElementById('results');
+            results.classList.add('visible');
+
+            // ── 1. Solution Header ──
+            document.getElementById('resultHeader').innerHTML = `
+                <div style="flex:1">
+                    <div class="solution-badge">🎯 推薦方案</div>
+                    <div class="solution-title">${data.solution_name}</div>
+                    <div class="solution-desc">${data.workflow.description}</div>
+                    <div style="margin-top:10px; font-size:0.78rem; color:var(--text-muted);">
+                        📌 ${data.industry} / ${data.department}　|　匹配度 ${(data.match_score * 100).toFixed(1)}%
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <div class="difficulty-score-big">${data.difficulty}/5</div>
+                    <div class="difficulty-stars-big">${data.difficulty_display}</div>
+                    <div class="difficulty-label">困難度</div>
+                </div>
+            `;
+
+            // ── 2. n8n Workflow ──
+            const wfContent = document.getElementById('workflowContent');
+            const wf = data.workflow;
+            const nodes = wf.nodes || [];
+
+            let nodesHtml = nodes.map((n, i) => {
+                const arrow = i < nodes.length - 1 ? '<span class="wf-arrow">→</span>' : '';
+                return `<span class="wf-node">${n.name}</span>${arrow}`;
+            }).join('');
+
+            let detailHtml = nodes.map((n, i) => `
+                <div class="wf-detail-item">
+                    <div class="wf-detail-num">${i + 1}</div>
+                    <div>
+                        <div><strong>${n.name}</strong> <span class="wf-detail-type">${n.type}</span></div>
+                        <div style="font-size:0.82rem; color:var(--text-secondary); margin-top:3px;">${n.desc}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            wfContent.innerHTML = `
+                <div style="font-weight:600; margin-bottom:12px;">📦 ${wf.name}</div>
+                <div class="workflow-flow">${nodesHtml}</div>
+                <div class="wf-nodes-detail">${detailHtml}</div>
+            `;
+
+            // ── 3. Difficulty with Reasons ──
+            const diffContent = document.getElementById('difficultyContent');
+            const reasonsHtml = (data.difficulty_reasons || []).map((r, i) => `
+                <div class="reason-item">
+                    <div class="reason-num">${i + 1}</div>
+                    <div>${r}</div>
+                </div>
+            `).join('');
+
+            diffContent.innerHTML = `
+                <div class="difficulty-header">
+                    <div>
+                        <div class="difficulty-score-big">${data.difficulty} 分</div>
+                        <div class="difficulty-stars-big">${data.difficulty_display}</div>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px;">評分理由：</div>
+                    </div>
+                </div>
+                <div class="reason-list">${reasonsHtml}</div>
+            `;
+
+            // ── 4. Implementation Steps ──
+            const stepsContent = document.getElementById('stepsContent');
+            const stepsHtml = (data.steps || []).map(s => `
+                <div class="step-item" data-step="${s.step}">
+                    <div class="step-title">${s.title}</div>
+                    <div class="step-duration">⏱ ${s.duration || s.dur || ''}</div>
+                    <div class="step-desc">${s.desc || s.description || ''}</div>
+                </div>
+            `).join('');
+
+            stepsContent.innerHTML = `<div class="steps-timeline">${stepsHtml}</div>`;
+
+            // ── 5. Alternatives ──
+            const altCard = document.getElementById('altCard');
+            const altContent = document.getElementById('altContent');
+            if (data.alternatives && data.alternatives.length > 0) {
+                altCard.style.display = 'block';
+                altContent.innerHTML = data.alternatives.map(a => `
+                    <div class="alt-card">
+                        <span class="alt-name">${a.name}</span>
+                        <div class="alt-meta">
+                            <span>匹配 ${(a.match_score * 100).toFixed(1)}%</span>
+                            <span>困難度 ${a.difficulty_display}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                altCard.style.display = 'none';
+            }
+
+            // Scroll to results
+            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

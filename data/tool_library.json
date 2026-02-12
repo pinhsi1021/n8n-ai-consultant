@@ -1,0 +1,564 @@
+{
+    "tools": [
+        {
+            "id": "tool_001",
+            "name": "Google Cloud Vision API",
+            "category": "影像辨識",
+            "description": "Google 提供的雲端影像辨識服務，支援物件偵測、OCR、人臉偵測、標籤分類等功能。適合需要快速導入視覺 AI 的企業。",
+            "keywords": [
+                "影像辨識",
+                "OCR",
+                "物件偵測",
+                "人臉",
+                "Google",
+                "vision",
+                "圖片",
+                "分類",
+                "標籤",
+                "cloud"
+            ],
+            "dimensions": [
+                "perception"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.function"
+            ],
+            "pricing_model": "按量計費",
+            "typical_use": "產品瑕疵檢測、文件數位化、門店人流分析"
+        },
+        {
+            "id": "tool_002",
+            "name": "Tesseract OCR",
+            "category": "OCR",
+            "description": "開源 OCR 引擎，支援多語言文字辨識，可部署於本地端，無需雲端依賴。適合對資料隱私要求高的場景。",
+            "keywords": [
+                "OCR",
+                "文字辨識",
+                "開源",
+                "本地",
+                "掃描",
+                "文件",
+                "document",
+                "offline",
+                "privacy"
+            ],
+            "dimensions": [
+                "perception"
+            ],
+            "difficulty": 3,
+            "n8n_nodes": [
+                "n8n-nodes-base.executeCommand",
+                "n8n-nodes-base.readBinaryFile"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "發票辨識、合約掃描、表單數位化"
+        },
+        {
+            "id": "tool_003",
+            "name": "AWS Comprehend",
+            "category": "NLP",
+            "description": "AWS 自然語言處理服務，提供情感分析、實體辨識、關鍵詞擷取、語言偵測等功能。",
+            "keywords": [
+                "NLP",
+                "情感分析",
+                "sentiment",
+                "實體辨識",
+                "關鍵詞",
+                "文字",
+                "AWS",
+                "語意",
+                "分類"
+            ],
+            "dimensions": [
+                "cognition"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.awsComprehend",
+                "n8n-nodes-base.httpRequest"
+            ],
+            "pricing_model": "按量計費",
+            "typical_use": "客戶評論分析、輿情監控、文件分類"
+        },
+        {
+            "id": "tool_004",
+            "name": "Rasa Open Source",
+            "category": "對話式 AI",
+            "description": "開源對話式 AI 框架，可在本地端建構智能客服機器人，支援意圖辨識與對話管理。",
+            "keywords": [
+                "chatbot",
+                "對話",
+                "客服",
+                "意圖",
+                "NLU",
+                "機器人",
+                "FAQ",
+                "問答",
+                "開源",
+                "自動回覆"
+            ],
+            "dimensions": [
+                "cognition",
+                "automation"
+            ],
+            "difficulty": 4,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.webhook"
+            ],
+            "pricing_model": "免費開源 / 企業版付費",
+            "typical_use": "智能客服、內部 IT 幫助台、訂單查詢機器人"
+        },
+        {
+            "id": "tool_005",
+            "name": "Prophet (Meta)",
+            "category": "時序預測",
+            "description": "Meta 開發的時序預測工具，特別適合帶有季節性與趨勢的業務指標預測，如銷售額、流量等。",
+            "keywords": [
+                "預測",
+                "時序",
+                "forecast",
+                "趨勢",
+                "季節",
+                "銷量",
+                "demand",
+                "time series",
+                "Prophet"
+            ],
+            "dimensions": [
+                "prediction"
+            ],
+            "difficulty": 3,
+            "n8n_nodes": [
+                "n8n-nodes-base.executeCommand",
+                "n8n-nodes-base.spreadsheetFile"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "銷售預測、庫存規劃、流量預測"
+        },
+        {
+            "id": "tool_006",
+            "name": "scikit-learn",
+            "category": "機器學習",
+            "description": "Python 最受歡迎的機器學習函式庫，提供分類、回歸、聚類、降維等演算法，適合中小型數據集。",
+            "keywords": [
+                "機器學習",
+                "分類",
+                "回歸",
+                "聚類",
+                "預測",
+                "客戶流失",
+                "churn",
+                "risk",
+                "風險",
+                "模型"
+            ],
+            "dimensions": [
+                "prediction",
+                "cognition"
+            ],
+            "difficulty": 3,
+            "n8n_nodes": [
+                "n8n-nodes-base.executeCommand",
+                "n8n-nodes-base.function"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "客戶流失預測、信用風險評分、客戶分群"
+        },
+        {
+            "id": "tool_007",
+            "name": "UiPath",
+            "category": "RPA",
+            "description": "企業級 RPA 平台，以視覺化方式設計自動化流程，可操作桌面應用、網頁、ERP 等系統。",
+            "keywords": [
+                "RPA",
+                "自動化",
+                "流程",
+                "機器人",
+                "重複",
+                "作業",
+                "ERP",
+                "桌面",
+                "robotic",
+                "UiPath"
+            ],
+            "dimensions": [
+                "automation"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.webhook"
+            ],
+            "pricing_model": "訂閱制",
+            "typical_use": "報表自動生成、訂單處理、資料搬移"
+        },
+        {
+            "id": "tool_008",
+            "name": "n8n",
+            "category": "工作流自動化",
+            "description": "開源工作流自動化平台，以 node-based 介面串接數百種服務，適合建立跨系統整合自動化。",
+            "keywords": [
+                "工作流",
+                "workflow",
+                "自動化",
+                "整合",
+                "API",
+                "trigger",
+                "webhook",
+                "pipeline",
+                "n8n",
+                "排程"
+            ],
+            "dimensions": [
+                "automation"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.webhook",
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.if"
+            ],
+            "pricing_model": "免費開源 / 雲端付費",
+            "typical_use": "跨系統資料同步、告警通知、審批流程"
+        },
+        {
+            "id": "tool_009",
+            "name": "Apache Airflow",
+            "category": "資料管道",
+            "description": "開源工作流排程工具，專為資料管道設計，可管理 ETL、批次處理與任務依賴。",
+            "keywords": [
+                "ETL",
+                "資料管道",
+                "pipeline",
+                "排程",
+                "batch",
+                "data",
+                "Airflow",
+                "DAG",
+                "整合"
+            ],
+            "dimensions": [
+                "automation"
+            ],
+            "difficulty": 4,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.executeCommand"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "每日資料匯整、報表產出、數據倉儲載入"
+        },
+        {
+            "id": "tool_010",
+            "name": "Dialogflow (Google)",
+            "category": "對話式 AI",
+            "description": "Google 的對話式 AI 平台，提供意圖偵測、實體擷取、多輪對話管理，支援多語系。",
+            "keywords": [
+                "chatbot",
+                "對話",
+                "客服",
+                "intent",
+                "Dialogflow",
+                "Google",
+                "語音",
+                "NLU",
+                "問答"
+            ],
+            "dimensions": [
+                "cognition",
+                "perception"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.googleDialogflow",
+                "n8n-nodes-base.webhook"
+            ],
+            "pricing_model": "免費額度 / 按量計費",
+            "typical_use": "語音助理、智能客服、LINE Bot 整合"
+        },
+        {
+            "id": "tool_011",
+            "name": "YOLO (Ultralytics)",
+            "category": "物件偵測",
+            "description": "即時物件偵測模型，可在影像或影片中快速辨識並定位多種物件，適合工業與零售場景。",
+            "keywords": [
+                "物件偵測",
+                "影像",
+                "即時",
+                "YOLO",
+                "detection",
+                "工業",
+                "瑕疵",
+                "視覺",
+                "camera",
+                "監控"
+            ],
+            "dimensions": [
+                "perception"
+            ],
+            "difficulty": 3,
+            "n8n_nodes": [
+                "n8n-nodes-base.executeCommand",
+                "n8n-nodes-base.httpRequest"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "產線瑕疵檢測、人流計數、安全監控"
+        },
+        {
+            "id": "tool_012",
+            "name": "Elasticsearch",
+            "category": "搜尋引擎",
+            "description": "高效能分散式搜尋引擎，支援全文搜尋、語意搜尋、日誌分析，適合大規模文字資料場景。",
+            "keywords": [
+                "搜尋",
+                "search",
+                "語意",
+                "全文",
+                "日誌",
+                "log",
+                "分析",
+                "Elasticsearch",
+                "知識庫"
+            ],
+            "dimensions": [
+                "cognition"
+            ],
+            "difficulty": 3,
+            "n8n_nodes": [
+                "n8n-nodes-base.elasticsearch",
+                "n8n-nodes-base.httpRequest"
+            ],
+            "pricing_model": "免費開源 / 雲端付費",
+            "typical_use": "企業知識搜尋、日誌監控、商品搜尋推薦"
+        },
+        {
+            "id": "tool_013",
+            "name": "Power BI + Azure ML",
+            "category": "商業智慧",
+            "description": "微軟商業智慧工具搭配 Azure 機器學習，提供視覺化儀表板與預測分析的整合方案。",
+            "keywords": [
+                "BI",
+                "儀表板",
+                "視覺化",
+                "dashboard",
+                "預測",
+                "分析",
+                "report",
+                "趨勢",
+                "Azure",
+                "Power BI"
+            ],
+            "dimensions": [
+                "prediction",
+                "cognition"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.microsoftExcel",
+                "n8n-nodes-base.httpRequest"
+            ],
+            "pricing_model": "訂閱制",
+            "typical_use": "營運儀表板、銷售趨勢分析、KPI 追蹤"
+        },
+        {
+            "id": "tool_014",
+            "name": "Twilio",
+            "category": "通訊自動化",
+            "description": "雲端通訊 API 平台，提供 SMS、語音、Email、WhatsApp 等通道的自動化訊息發送。",
+            "keywords": [
+                "通知",
+                "SMS",
+                "email",
+                "語音",
+                "自動回覆",
+                "訊息",
+                "推播",
+                "notification",
+                "alert",
+                "Twilio"
+            ],
+            "dimensions": [
+                "automation"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.twilio",
+                "n8n-nodes-base.webhook"
+            ],
+            "pricing_model": "按量計費",
+            "typical_use": "訂單通知、預約提醒、異常告警"
+        },
+        {
+            "id": "tool_015",
+            "name": "H2O.ai AutoML",
+            "category": "自動機器學習",
+            "description": "自動機器學習平台，可自動進行特徵工程、模型選擇與超參數調整，降低 ML 導入門檻。",
+            "keywords": [
+                "AutoML",
+                "自動",
+                "機器學習",
+                "模型",
+                "預測",
+                "分類",
+                "回歸",
+                "風險",
+                "churn",
+                "流失"
+            ],
+            "dimensions": [
+                "prediction"
+            ],
+            "difficulty": 2,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.executeCommand"
+            ],
+            "pricing_model": "免費開源 / 企業版付費",
+            "typical_use": "快速建模、客戶分群、信用評分"
+        },
+        {
+            "id": "tool_016",
+            "name": "Apache Kafka",
+            "category": "串流處理",
+            "description": "分散式事件串流平台，適合即時資料處理、事件驅動架構與大規模訊息佇列。",
+            "keywords": [
+                "串流",
+                "stream",
+                "即時",
+                "event",
+                "Kafka",
+                "訊息",
+                "queue",
+                "real-time",
+                "data",
+                "整合"
+            ],
+            "dimensions": [
+                "automation",
+                "perception"
+            ],
+            "difficulty": 5,
+            "n8n_nodes": [
+                "n8n-nodes-base.kafka",
+                "n8n-nodes-base.kafkaTrigger"
+            ],
+            "pricing_model": "免費開源 / 雲端付費",
+            "typical_use": "即時交易監控、IoT 數據串流、事件驅動通知"
+        },
+        {
+            "id": "tool_017",
+            "name": "Hugging Face Transformers",
+            "category": "NLP 模型",
+            "description": "開源 NLP 模型庫，提供預訓練的文字分類、命名實體辨識、摘要、翻譯等模型，可本地部署。",
+            "keywords": [
+                "NLP",
+                "文字分類",
+                "摘要",
+                "翻譯",
+                "情感",
+                "實體",
+                "transformer",
+                "BERT",
+                "語意",
+                "分析"
+            ],
+            "dimensions": [
+                "cognition"
+            ],
+            "difficulty": 4,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.executeCommand"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "客戶反饋分析、合約摘要、多語翻譯"
+        },
+        {
+            "id": "tool_018",
+            "name": "Optaplanner",
+            "category": "最佳化排程",
+            "description": "開源排程最佳化引擎，使用約束求解技術進行人員排班、車輛調度、資源分配等最佳化問題。",
+            "keywords": [
+                "排程",
+                "排班",
+                "調度",
+                "最佳化",
+                "scheduling",
+                "optimization",
+                "資源分配",
+                "vehicle",
+                "routing"
+            ],
+            "dimensions": [
+                "automation",
+                "prediction"
+            ],
+            "difficulty": 4,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.executeCommand"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "員工排班、物流路線規劃、產線排程"
+        },
+        {
+            "id": "tool_019",
+            "name": "Grafana + Prometheus",
+            "category": "監控告警",
+            "description": "開源監控與視覺化平台，搭配 Prometheus 進行系統、IoT 設備或業務指標的即時監控與告警。",
+            "keywords": [
+                "監控",
+                "告警",
+                "alert",
+                "IoT",
+                "sensor",
+                "dashboard",
+                "即時",
+                "設備",
+                "metric",
+                "Grafana"
+            ],
+            "dimensions": [
+                "perception",
+                "automation"
+            ],
+            "difficulty": 3,
+            "n8n_nodes": [
+                "n8n-nodes-base.httpRequest",
+                "n8n-nodes-base.webhook"
+            ],
+            "pricing_model": "免費開源",
+            "typical_use": "設備運行監控、系統健康告警、SLA 追蹤"
+        },
+        {
+            "id": "tool_020",
+            "name": "Zapier",
+            "category": "無代碼自動化",
+            "description": "無代碼自動化平台，可快速串接數千種 SaaS 工具，以 trigger-action 模式建立自動化流程。",
+            "keywords": [
+                "自動化",
+                "no-code",
+                "無代碼",
+                "整合",
+                "API",
+                "trigger",
+                "workflow",
+                "SaaS",
+                "串接"
+            ],
+            "dimensions": [
+                "automation"
+            ],
+            "difficulty": 1,
+            "n8n_nodes": [
+                "n8n-nodes-base.webhook",
+                "n8n-nodes-base.httpRequest"
+            ],
+            "pricing_model": "免費額度 / 訂閱制",
+            "typical_use": "CRM 同步、表單自動匯入、跨平台通知"
+        }
+    ]
+}
