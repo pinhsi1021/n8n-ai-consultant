@@ -34,6 +34,21 @@
 - **Python 3.8 或更高版本**：請至 [Python 官網](https://www.python.org/downloads/) 下載並安裝。
 - **Git**：用於複製專案程式碼。
 
+### 🚀 快速啟動 (Quick Start)
+如果您不想手動逐一安裝，可以使用我們準備的自動化腳本：
+
+**macOS / Linux:**
+1. 下載專案後，在終端機執行：
+   ```bash
+   chmod +x run.sh
+   ./run.sh
+   ```
+   腳本會自動檢查環境、建立虛擬環境、安裝依賴並開啟瀏覽器。
+
+---
+
+### 分步安裝指南 (Manual Installation)
+
 ### 步驟 1：下載專案
 開啟終端機 (Terminal) 或命令提示字元 (Command Prompt)，執行以下指令：
 
