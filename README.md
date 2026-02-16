@@ -33,7 +33,7 @@
 **複製以下指令，貼上並按下 Enter，即可自動安裝並啟動系統：**
 
 ```bash
-git clone https://github.com/pinhsi1021/n8n-ai-consultant.git && cd n8n-ai-consultant && chmod +x run.sh && ./run.sh
+[ -d "n8n-ai-consultant" ] && (cd n8n-ai-consultant && git pull) || git clone https://github.com/pinhsi1021/n8n-ai-consultant.git; cd n8n-ai-consultant && chmod +x run.sh && ./run.sh
 ```
 
 *(系統會自動檢查環境、安裝必要套件並開啟瀏覽器)*
