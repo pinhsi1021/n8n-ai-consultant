@@ -24,7 +24,7 @@
 ## 🛠 技術架構 (Tech Stack)
 
 - **Backend**: Python 3.8+ (標準庫 `http.server`, `urllib`, `json`)
-- **NLP Engine**: `jieba` (中文斷詞與關鍵字萃取)
+- **NLP Engine**: `jieba` (中文斷詞), `scikit-learn` (TF-IDF 特徵提取)
 - **Frontend**: HTML5, CSS3 (Modern UI), Vanilla JavaScript
 - **Integration**: n8n Community API
 
